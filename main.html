@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Boolflix</title>
+  </head>
+  <body>
+
+    <input type="text" id="search">
+    <button type="button" id="searchBtn">Cerca</button>
+    <div class="results">
+    </div>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+      <div class="entry">
+        <h1>Titolo: {{titleVar}}</h1>
+        <h2>Titolo Originale: {{originalTitleVar}}</h2>
+        <h3>Lingua Originale: {{originalLangVar}}</h3>
+        <h3>Voto medio: {{{voteAverageVar}}}</h3>
+      </div>
+    </script>
+
+    <script src="script.js" charset="utf-8"></script>
+  </body>
+</html>
