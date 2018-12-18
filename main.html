@@ -11,15 +11,16 @@
   <body>
 
     <input type="text" id="search">
-    <button type="button" id="searchBtn">Cerca</button>
+    <button type="button" id="srcButton">Cerca</button>
     <div class="results">
     </div>
 
     <script id="entry-template" type="text/x-handlebars-template">
       <div class="entry">
         <h1>Titolo: {{titleVar}}</h1>
-        <h2>Titolo Originale: {{originalTitleVar}}</h2>
+        <h3>Titolo Originale: {{originalTitleVar}}</h3>
         <h3>Lingua Originale: {{originalLangVar}}</h3>
+        <h3>Data di uscita:{{release_dateVar}}</h3>
         <h3>Voto medio: {{{voteAverageVar}}}</h3>
       </div>
     </script>
