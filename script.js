@@ -11,20 +11,30 @@ function getRatedStars(apiScore) {
     }
   return rated.join('');
 }
+//da rivedere flags
 
-function getFlag(apiLanguage) {
-  var flags = ['de','en-US','en','es','fr','it','ja','pt','ru'];
+// function getFlag(apiLanguage) {
+//  var flags = ['de','en-US','en','es','fr','it','ja','pt','ru'];
+//
+//   if (flags.includes(apiLanguage)) {
+//    return '<img src="flags\\16\\' + apiLanguage + '.svg">';
+//
+//  }
+//  else {
+//    return apiLanguage
+//  }
+//
+// }
 
-  if (flags.includes(apiLanguage)) {
-    return '<img src="flags\\16\\' + apiLanguage + '.svg">';
-
+function getimage(posterPath) {
+  var imgUrl = 'https://image.tmdb.org/t/p/' + 'original' + posterPath;
+  if (imgUrl != 'https://image.tmdb.org/t/p/originalnull') {
+    return '<img src="' + imgUrl + '">';
   }
   else {
-    return apiLanguage
+    return 'NO COVER PHOTO'
   }
-
 }
-
 
 // MILESTONE 1
 $(document).ready(function () {
@@ -33,7 +43,7 @@ $(document).ready(function () {
     var searchValue = $('#search').val();
 
     $.ajax({
-      url : 'https://api.themoviedb.org/3/search/movie',
+      url : 'https://api.themoviedb.org/3/search/multi',
       method : 'GET',
       data : {
         api_key : '0c70749bec668f742426465c13e8120f',
@@ -50,9 +60,11 @@ $(document).ready(function () {
           var stars = getRatedStars(callData.results[i].vote_average);
 
           var context = {
+            posterVar : getimage(callData.results[i].poster_path),
+
             titleVar : callData.results[i].title,
             originalTitleVar : callData.results[i].original_title,
-            originalLangVar : getFlag(callData.results[i].original_language),
+            originalLangVar : callData.results[i].original_language,
             release_dateVar : callData.results[i].release_date,
             voteAverageVar : getRatedStars(callData.results[i].vote_average)
           };
