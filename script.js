@@ -12,6 +12,20 @@ function getRatedStars(apiScore) {
   return rated.join('');
 }
 
+function getFlag(apiLanguage) {
+  var flags = ['de','en-US','en','es','fr','it','ja','pt','ru'];
+
+  if (flags.includes(apiLanguage)) {
+    return '<img src="flags\\16\\' + apiLanguage + '.svg">';
+
+  }
+  else {
+    return apiLanguage
+  }
+
+}
+
+
 // MILESTONE 1
 $(document).ready(function () {
   $('#srcButton').click(function() {
@@ -38,7 +52,7 @@ $(document).ready(function () {
           var context = {
             titleVar : callData.results[i].title,
             originalTitleVar : callData.results[i].original_title,
-            originalLangVar : callData.results[i].original_language,
+            originalLangVar : getFlag(callData.results[i].original_language),
             release_dateVar : callData.results[i].release_date,
             voteAverageVar : getRatedStars(callData.results[i].vote_average)
           };
