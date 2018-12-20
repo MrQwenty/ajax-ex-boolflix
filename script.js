@@ -1,49 +1,57 @@
 
-function getRatedStars(apiScore) {
-  var rated = [];
-  var score = Math.round(apiScore/2);
+function getflags(language) {
 
-    for (var i = 0; i < score; i++) {
-      rated.push('<i class="fas fa-star"></i>')
-    }
-    for (var i = 0; i < (5 - score); i++) {
-      rated.push('<i class="far fa-star"></i>')
-    }
-  return rated.join('');
+  var flag = '';
+
+  if (flag.includes(language)) {
+
+    flag = "<img class='flag' src='flags/" + language + ".png' />";
+  } else {
+    flag = '<span class="poster">ERROR</span>';
+  }
+
+  return flag;
+
 }
-//da rivedere flags
 
-// function getFlag(apiLanguage) {
-//  var flags = ['de','en-US','en','es','fr','it','ja','pt','ru'];
-//
-//   if (flags.includes(apiLanguage)) {
-//    return '<img src="flags\\16\\' + apiLanguage + '.svg">';
-//
-//  }
-//  else {
-//    return apiLanguage
-//  }
-//
-// }
+function getRatedStars(vote) {
+  var starNum = '';
+  var fullStar = "<i class='fas fa-star'></i>";
+  var emptyStar = "<i class='far fa-star'></i>";
 
-function getimage(posterPath) {
-  var imgUrl = 'https://image.tmdb.org/t/p/' + 'original' + posterPath;
-  if (imgUrl != 'https://image.tmdb.org/t/p/originalnull') {
-    return '<img src="' + imgUrl + '">';
+  for (var i = 0; i < 5; i++) {
+    if (i <= vote) {
+      starNum += fullStar;
+    } else {
+      starNum += emptyStar;
+    }
+  }
+
+  return starNum;
+};
+
+function getPoster(posterPath) {
+  var posterUrl = 'https://image.tmdb.org/t/p/' + 'original' + posterPath;
+  if (posterUrl != 'https://image.tmdb.org/t/p/originalnull' && posterUrl != 'https://image.tmdb.org/t/p/originalundefined') {
+    return '<img class="poster" src="' + posterUrl + '">';
   }
   else {
-    return 'NO COVER PHOTO'
+    return '<span class="poster">NO COVER PHOTO</span>'
   }
 }
 
-// MILESTONE 1
 $(document).ready(function () {
-  $('#srcButton').click(function() {
+  $('#srcButton').one('click',function(){
+    $('#search').show()
+  }),
+  $('#search').on('keypress',function(invio) {
 
     var searchValue = $('#search').val();
 
+    if (invio.which == 13) {
+
     $.ajax({
-      url : 'https://api.themoviedb.org/3/search/multi',
+      url : 'https://api.themoviedb.org/3/search/movie',
       method : 'GET',
       data : {
         api_key : '0c70749bec668f742426465c13e8120f',
@@ -52,21 +60,21 @@ $(document).ready(function () {
       },
       success : function(callData) {
 
-        $('.results .entry').remove();
+        $('.results .Details').remove();
         for (var i = 0; i < callData.results.length; i++) {
-          var source   = $('#entry-template').html();
+          var source   = $('#movie-template').html();
           var template = Handlebars.compile(source);
 
           var stars = getRatedStars(callData.results[i].vote_average);
 
           var context = {
-            posterVar : getimage(callData.results[i].poster_path),
-
             titleVar : callData.results[i].title,
             originalTitleVar : callData.results[i].original_title,
-            originalLangVar : callData.results[i].original_language,
+            originalLangVar : getflags(callData.results[i].original_language),
             release_dateVar : callData.results[i].release_date,
-            voteAverageVar : getRatedStars(callData.results[i].vote_average)
+            voteAverageVar : getRatedStars(callData.results[i].vote_average),
+            posterVar : getPoster(callData.results[i].poster_path),
+            overviewVar: callData.results[i].overview
           };
 
           var html = template(context);
@@ -80,5 +88,6 @@ $(document).ready(function () {
         console.log('errore');
       }
     });
-  });
+   };
+ });
 });

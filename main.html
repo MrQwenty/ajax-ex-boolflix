@@ -2,27 +2,58 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.js" charset="utf-8"></script>
     <link rel="stylesheet" href="style.css">
     <title>Boolflix</title>
   </head>
   <body>
+    <div class="container">
+      <div class="header">
+        <a href="#" class="logo">BOOLFLIX</a>
+        <div class="Wrapper">
+          <ul class="Navbar_left">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Serie TV</a></li>
+            <li><a href="#">Film</a></li>
+            <li><a href="#">Generi</a></li>
+            <li><a href="#">A - Z</a></li>
+          </ul>
+          <ul class="Navbar_right">
+            <li><a href="#" id="srcButton"><i class="fas fa-search"></i></a></li>
+            <!-- template handlebars: -->
+            <input type="text" id="search" class="unactive">
+            <li class="userIcon"></li>
+          </ul>
+        </div>
+      </div>
 
-    <input type="text" id="search">
-    <button type="button" id="srcButton">Cerca</button>
-    <div class="results">
+      <!-- <div class="test">
+      </div> -->
+
+      <div class="results">
+        <!-- i risultati della ricerca verranno inseriti qui -->
+      </div>
+
     </div>
-
-    <script id="entry-template" type="text/x-handlebars-template">
-     <div class="filmImg">{{{posterVar}}}</div>
-      <div class="entry">
-        <h1>Titolo: {{titleVar}}</h1>
-        <h3>Titolo Originale: {{originalTitleVar}}</h3>
-        <h3>Lingua Originale: {{originalLangVar}}</h3>
-        <h3>Data di uscita:{{release_dateVar}}</h3>
-        <h3>Voto medio: {{{voteAverageVar}}}</h3>
+    <!-- template handlebars -->
+    <script id="movie-template" type="text/x-handlebars-template">
+      <div class="Details">
+        <div class="Details_Container unactive">
+          <h1 class="title">{{titleVar}}</h1>
+          <h3>Titolo Originale: {{originalTitleVar}}</h3>
+          <h3>Lingua Originale: {{{originalLangVar}}}</h3>
+          <h3>Data di uscita: {{release_date}}</h3>
+          <h3 class="stars">Voto medio: {{{voteAverageVar}}}</h3>
+          <p>
+            <strong>Descrizione:</strong>
+            <br>
+            {{{overviewVar}}}
+          </p>
+        </div>
+        <div class="posterWrapper">{{{posterVar}}}</div>
       </div>
     </script>
 
